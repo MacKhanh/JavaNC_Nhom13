@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách phiếu mượn</title>
+    <script>
+        function returnBook(phieuMuonId) {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById(`actualReturnDate-${phieuMuonId}`).innerText = today;
+
+            // Send an update request to the server
+            fetch(`/NguoiMuon/TraSach/${phieuMuonId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ngayTraThucTe: today })
+            })
+            .then(response => {
+                if (response.status === 409) {
+                    alert("Phiếu mượn đã được trả trước đó.");
+                } else {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                if (data) {
+                    console.log('Book returned:', data);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>Danh sách phiếu mượn</h1>
+<table border="1">
+    <tr>
+        <th>Mã phiếu mượn</th>
+        <th>Mã Sinh Viên</th>
+        <th>Ngày mượn</th>
+        <th>Ngày trả dự kiến</th>
+        <th>Ngày trả thực tế</th>
+        <th>Trạng thái</th>
+        <th>Chi Tiết</th>
+        <th>Return Book</th>
+    </tr>
+    <tr th:each="phieuMuon : ${phieuMuons}">
+        <td th:text="${phieuMuon.maPhieuMuon}"></td>
+        <td th:text="${phieuMuon.maSinhVien}"></td>
+        <td th:text="${phieuMuon.ngayMuon}"></td>
+        <td th:text="${phieuMuon.ngayTraDuKien}"></td>
+        <td id="actualReturnDate-${phieuMuon.maPhieuMuon}" th:text="${phieuMuon.ngayTraThucTe}"></td>
+        <td th:text="${phieuMuon.trangThai}"></td>
+        <td>
+            <ul>
+                <li th:each="chiTiet : ${phieuMuon.chiTietPhieuMuons}" th:text="${chiTiet.maSach}"></li>
+            </ul>
+        </td>
+        <td>
+            <button onclick="returnBook('${phieuMuon.maPhieuMuon}')">Trả Sách</button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

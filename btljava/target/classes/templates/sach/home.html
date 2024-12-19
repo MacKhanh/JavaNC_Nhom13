@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang chủ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+	.navbar{
+		margin: 30px 50px;
+	}
+	.main-content {
+	            flex: 1;
+	}
+	.main-content {
+	            padding: 30px;
+	            flex-grow: 1;
+	            margin-top: 10px; /* Thêm khoảng cách cho main content */
+	}
+	.chart-placeholder {
+			position: relative;
+	           height: 70vh;
+	           background-color: #e9ecef;
+	           border-radius: 15px;
+	           display: flex;
+	           align-items: center;
+	           justify-content: center;
+	           color: #6c757d;
+	           font-size: 1.5rem;
+	           box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+	           overflow: hidden; /* Đảm bảo không bị tràn ra ngoài */
+	       }
+		.chart-placeholder img{
+			position: absolute;
+			opacity: 0;
+			animation: fadeEffect 16s infinite;
+		}
+		.chart-placeholder img:nth-child(1){
+			animation-delay: 0s;
+		}
+		.chart-placeholder img:nth-child(2){
+			animation-delay: 4s;
+		}
+		.chart-placeholder img:nth-child(3){
+			animation-delay: 8s;
+		}
+		.chart-placeholder img:nth-child(4){
+			animation-delay: 12s;
+		}
+	.chart-placeholder img {
+	     width: 100%;
+	     height: 100%;
+	     object-fit: cover;
+	     border-radius: 15px;
+	}
+	.btn{
+		 margin-left:30px ;
+	}
+	@keyframes fadeEffect {
+			    0% { opacity: 0; }
+			    10% { opacity: 1; }
+			    33% { opacity: 1; }
+			    43% { opacity: 0; }
+			    100% { opacity: 0; }
+	}
+</style>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="home">
+        <img src="https://cdn.worldvectorlogo.com/logos/spring-3.svg" alt="Logo" width="70" height="70">
+        Quản lý thư viện
+      </a>
+      
+      <!-- Toggle button for small screens -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="books" target="_blank">Thư viện</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://nxbkimdong.com.vn/?utm_campaign=1456466&utm_content=kmpJvILHq81FbYrOmYtv2FS2k9vcUepT2B1XU5NV55w4iSOP&ref=accesstrade&utm_source=accesstrade&aff_sid=kmpJvILHq81FbYrOmYtv2FS2k9vcUepT2B1XU5NV55w4iSOP&gad_source=1&gclid=CjwKCAiA34S7BhAtEiwACZzv4ckgUC4OXkIuS4DSA2syuRPRFz9BAUKrMkcWY4vyEGMl6yu0BSAM_hoCXdEQAvD_BwE" 
+			target="_blank">Giới thiệu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.facebook.com/profile.php?id=100059253535891&mibextid=ZbWKwL" target="_blank">Liên hệ</a>
+          </li>
+        </ul>
+        <!-- Buttons -->
+        <div class="d-flex">
+		  <!--<a href="/admin/thongke" class="btn btn-outline-primary me-2">Xem thống kê</a>
+		  <a href="/admin/dashboard" class="btn btn-outline-primary me-2">Test admin web</a>-->
+          <a href="login" class="btn btn-outline-primary me-2">Đăng Nhập</a>
+          <a href="register" class="btn btn-primary">Đăng Ký</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  		<div class="main-content">
+             <div class="chart-placeholder">
+                   <img th:src="'https://png.pngtree.com/thumb_back/fw800/background/20220219/pngtree-cup-of-coffee-books-and-laptop-pen-knowledge-old-photo-image_1442388.jpg'" alt="Hình ảnh minh họa 1">
+  				   <img th:src="'https://img.pikbest.com/ai/illus_our/20230413/564711ca7ccdc570253d0f769822e83f.jpg!w700wp'" alt="Hình ảnh minh họa 2">
+  				   <img th:src="'https://cafeandbooks.wordpress.com/wp-content/uploads/2013/10/533989.jpg'" alt="Hình ảnh minh họa 3">
+  				   <img th:src="'https://img.lovepik.com/bg/20231218/Antique-Library-Bookshelf-with-Books-A-Stunning-Background_2639167_wh860.jpg!/fw/860'" alt="Hình ảnh minh họa 4">
+             </div>
+         </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

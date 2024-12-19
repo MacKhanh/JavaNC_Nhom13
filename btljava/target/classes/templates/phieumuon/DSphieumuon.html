@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách phiếu mượn</title>
+            <script>
+        function returnBook(phieuMuonId) {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById(`actualReturnDate-${phieuMuonId}`).innerText = today;
+
+            // Send an update request to the server
+            fetch(`/NguoiMuon/TraSach/${phieuMuonid}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ngayTraThucTe: today })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Book returned:', data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>Danh sách phiếu mượn</h1>
+<a href="/phieumuon/DaTra-loans">Đã Trả</a> | <a href="/phieumuon/ChuaTra-loans">Chưa Trả</a>
+<br>
+<a href ="/phieumuon/QuaHan-loans">Danh Sách đã quá hạn trả</a>
+<table border="1">
+    <tr>
+        <th>Mã phiếu mượn</th>
+        <th>Mã Sinh Viên</th>
+        <th>Ngày mượn</th>
+        <th>Ngày trả dự kiến</th>
+        <th>Ngày trả thực tế</th>
+        <th>Trạng thái</th>
+        <th>Chi Tiết</th>
+    </tr>
+    <tr th:each="phieuMuon : ${ds}">
+        <td th:text="${phieuMuon.maPhieuMuon}"></td>
+        <td th:text="${phieuMuon.maSinhVien}"></td>
+        <td th:text="${phieuMuon.ngayMuon}"></td>
+        <td th:text="${phieuMuon.ngayTraDuKien}"></td>
+        <td th:text="${phieuMuon.ngayTraThucTe}"></td>
+        <td th:text="${phieuMuon.trangThai}"></td>
+        <td>
+            <ul>
+                <li th:each="chiTiet : ${phieuMuon.chiTietPhieuMuons}" th:text="${chiTiet.maSach}"></li>
+            </ul>
+        </td>
+        <td>
+        	<a th:href="@{/phieumuon/details(maPhieuMuon=${phieuMuon.maPhieuMuon})}">Thông tin người mượn</a>
+        </td>
+        
+    </tr>
+</table>
+</body>
+</html>

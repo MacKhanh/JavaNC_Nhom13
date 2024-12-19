@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách phiếu mượn</title>
+</head>
+<body>
+    <h1>Danh sách phiếu mượn</h1>
+    <table border="1">
+        <tr>
+            <th>Mã phiếu mượn</th>
+            <th>Mã Sinh Viên</th>
+            <th>Ngày mượn</th>
+            <th>Ngày trả dự kiến</th>
+            <th>Ngày trả thực tế</th>
+            <th>Trạng thái</th>
+        </tr>
+        <tr th:each="phieuMuon : ${loans}">
+            <td th:text="${phieuMuon.maPhieuMuon}"></td>
+            <td th:text="${phieuMuon.maSinhVien}"></td>
+            <td th:text="${phieuMuon.ngayMuon}"></td>
+            <td th:text="${phieuMuon.ngayTraDuKien}"></td>
+            <td th:text="${phieuMuon.ngayTraThucTe}"></td>
+            <td th:text="${phieuMuon.trangThai}"></td>
+        </tr>
+    </table>
+</body>
+</html>

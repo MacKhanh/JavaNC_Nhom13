@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .sidebar {
+            width: 280px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background-color: #f8f9fa;
+            padding-top: 60px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .main-content {
+            margin-left: 300px;
+        }
+        .mt-4 .row{
+            margin-top: 80px;
+        }
+        canvas{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="dashboard">Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/sach/home">
+                            <i class="bi bi-house-door"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quanly">
+                            <i class="bi bi-book"></i> Quản lý sách
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="thongke">
+                            <i class="bi bi-bar-chart-line"></i> Xem thống kê
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chrome://settings/" target="_blank">
+                            <i class="bi bi-gear"></i> Cài đặt
+                        </a>
+                    </li>
+                </ul>
+				<div class="d-flex">
+                	<a href="/sach/home" class="btn btn-outline-light">Logout</a>
+				</div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <div class="list-group">
+            <a href="quanly" class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="bi bi-book me-2"></i> Quản lý sách
+            </a>
+            <a href="thongke" class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="bi bi-bar-chart-line me-2"></i> Xem thống kê
+            </a>
+            <a href="/users.html" class="list-group-item list-group-item-action d-flex align-items-center">
+                <i class="bi bi-people me-2"></i> Quản lý người mượn
+            </a>
+            <a href="chrome://settings/" class="list-group-item list-group-item-action d-flex align-items-center" target="_blank">
+                <i class="bi bi-gear me-2"></i> Cài đặt
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-8">
+                    <h5 class="text-center">Số lượng sách</h5>
+                    <canvas id="booksChart" width="400" height="250"></canvas>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="text-center">Tình trạng sách</h5>
+                    <canvas id="borrowedBooksChart" width="300" height="250"></canvas>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h5>Danh sách người mượn quá hạn</h5>
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tên</th>
+                            <th>Sách mượn</th>
+                            <th>Ngày mượn</th>
+                            <th>Quá hạn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Nguyễn Văn A</td>
+                            <td>Lập trình C++</td>
+                            <td>2024-11-30</td>
+                            <td>5 ngày</td>
+                        </tr>
+                        <tr>
+                            <td>Trần Thị B</td>
+                            <td>Học Python</td>
+                            <td>2024-11-28</td>
+                            <td>7 ngày</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+		async function fetchData() {
+		           const response = await fetch('http://localhost:8080/api/booksVer2');
+		           const data = await response.json();
+
+		           const labels = Object.keys(data); // Tên thể loại
+		           const values = Object.values(data); // Số lượng sách
+
+		           drawChart(labels, values);
+		       }
+
+		       function drawChart(labels, data) {
+		           const ctx = document.getElementById('booksChart').getContext('2d');
+		           new Chart(ctx, {
+		               type: 'bar', // Thay đổi 'pie', 'line' nếu cần
+		               data: {
+		                   labels: labels,
+		                   datasets: [{
+		                       label: 'Số lượng sách',
+		                       data: data,
+		                       backgroundColor: [
+		                           'rgba(255, 99, 132, 0.2)',
+		                           'rgba(54, 162, 235, 0.2)',
+		                           'rgba(255, 206, 86, 0.2)',
+		                           'rgba(75, 192, 192, 0.2)',
+		                           'rgba(153, 102, 255, 0.2)',
+		                           'rgba(255, 159, 64, 0.2)'
+		                       ],
+		                       borderColor: [
+		                           'rgba(255, 99, 132, 1)',
+		                           'rgba(54, 162, 235, 1)',
+		                           'rgba(255, 206, 86, 1)',
+		                           'rgba(75, 192, 192, 1)',
+		                           'rgba(153, 102, 255, 1)',
+		                           'rgba(255, 159, 64, 1)'
+		                       ],
+		                       borderWidth: 1
+		                   }]
+		               },
+		               options: {
+		                   scales: {
+		                       y: {
+		                           beginAtZero: true
+		                       }
+		                   }
+		               }
+		           });
+		       }
+
+        const borrowedBooksChartCtx = document.getElementById('borrowedBooksChart').getContext('2d');
+        const borrowedBooksChart = new Chart(borrowedBooksChartCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Đã mượn - Đã trả', 'Đã mượn - Chưa trả'],
+                datasets: [{
+                    label: 'Tình trạng sách',
+                    data: [73, 27],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 99, 132, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+		fetchData();
+    </script>
+</body>
+</html>

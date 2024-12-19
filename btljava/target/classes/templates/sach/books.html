@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+	#book-list{
+		margin-top: 20px;
+	}
+	.card-text .gia-goc {
+	    color: red;
+	}
+	.card-text .gia-muon {
+	    color: green;
+	}
+</style>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4"><b>THƯ VIỆN</b></h1>
+        <div id="book-list" class="row row-cols-1 row-cols-md-5 g-4">
+            <!-- Nội dung sách sẽ được thêm động từ API -->
+        </div>
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center" id="pagination">
+                <!-- Các nút phân trang sẽ được thêm động từ API -->
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const bookList = document.getElementById('book-list');
+        const pagination = document.getElementById('pagination');
+
+        let currentPage = 1;
+        const pageSize = 20; // Số sách mỗi trang
+
+        async function fetchBooks(page) {
+            const response = await fetch(`http://localhost:8080/api/allBooks?page=${page}&size=${pageSize}`);
+            if (!response.ok) {
+                console.error('Failed to fetch data from API');
+                return { content: [], totalPages: 0 };
+            }
+            const data = await response.json();
+            return data;
+        }
+
+        function renderBooks(books) {
+            bookList.innerHTML = '';
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'col';
+                bookCard.innerHTML = `
+                    <div class="card h-100">
+                        <img src="${book.linkAnh}" class="card-img-top" alt="${book.tenSach}">
+                        <div class="card-body">
+                            <h5 class="card-title">${book.tenSach}</h5>
+                            <p class="card-text">Giá bán: <strong class="gia-goc">${book.giaGoc}</strong></p>
+                            <p class="card-text">Giá mượn: <strong class="gia-muon">${book.giaKM}</strong></p>
+                            <p class="card-text">Số lượng còn: <strong>${book.soLuongCon}</strong></p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary w-100">Mượn sách</button>
+                        </div>
+                    </div>
+                `;
+                bookList.appendChild(bookCard);
+            });
+        }
+
+		function renderPagination(totalPages) {
+		    pagination.innerHTML = '';
+			
+			
+		    // Nút "Trang trước"
+		    if (currentPage > 1) {
+		        const prevItem = document.createElement('li');
+		        prevItem.className = 'page-item';
+		        prevItem.innerHTML = `<button class="page-link">&laquo;</button>`;
+		        prevItem.addEventListener('click', () => {
+		            currentPage--;
+		            loadBooks();
+		        });
+		        pagination.appendChild(prevItem);
+		    }
+			// Giới hạn số nút hiển thị
+			    const maxPagesToShow = 5;
+			    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+			    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+				
+				for (let i = startPage; i <= endPage; i++) {
+				    const pageItem = document.createElement('li');
+				    pageItem.className = `page-item ${i === currentPage ? 'active' : ''}`;
+				    pageItem.innerHTML = `<button class="page-link">${i}</button>`;
+				    pageItem.addEventListener('click', () => {
+				        currentPage = i;
+				        loadBooks();
+				    });
+				    pagination.appendChild(pageItem);
+				}
+
+				// Nút "Trang sau"
+				if (currentPage < totalPages) {
+				    const nextItem = document.createElement('li');
+				    nextItem.className = 'page-item';
+				    nextItem.innerHTML = `<button class="page-link">&raquo;</button>`;
+				    nextItem.addEventListener('click', () => {
+				        currentPage++;
+				        loadBooks();
+				    });
+				    pagination.appendChild(nextItem);
+				}
+		}
+
+
+        async function loadBooks() {
+            const data = await fetchBooks(currentPage);
+            renderBooks(data.content);
+            renderPagination(data.totalPages);
+        }
+
+        // Load sách lần đầu
+        loadBooks();
+    </script>
+</body>
+</html>

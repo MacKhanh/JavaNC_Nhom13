@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh Sửa Thông Tin Người Mượn</title>
+</head>
+<body>
+<h1>Chỉnh Sửa Thông Tin Người Mượn</h1>
+<form th:action="@{/NguoiMuon/update/{maSinhVien}(maSinhVien=${nguoiMuon.maSinhVien})}" th:object="${nguoiMuon}" method="post">
+    <label for="maSinhVien">Mã Sinh Viên:</label>
+    <input type="text" th:field="*{maSinhVien}" readonly="readonly"/>
+
+    <label for="tenSinhVien">Tên Sinh Viên:</label>
+    <input type="text" th:field="*{tenSinhVien}"/>
+
+    <label for="lop">Lớp:</label>
+    <input type="text" th:field="*{lop}"/>
+
+    <label for="soDienThoai">Số Điện Thoại:</label>
+    <input type="text" th:field="*{soDienThoai}"/>
+
+    <button type="submit">Cập Nhật</button>
+</form>
+<a href="/NguoiMuon/Index">Quay lại</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Loan Slip</title>
+</head>
+<body>
+    <h1>Create Loan Slip</h1>
+    <form th:action="@{/phieuMuon/create}" th:object="${phieuMuon}" method="post">
+        <div>
+            <label for="tenSinhVien">Tên Sinh Viên:</label>
+            <input type="text" id="tenSinhVien" th:field="*{nguoiMuon.tenSinhVien}" />
+        </div>
+        <div>
+            <label for="lop">Lớp:</label>
+            <input type="text" id="lop" th:field="*{nguoiMuon.lop}" />
+        </div>
+        <div>
+            <label for="soDienThoai">Số Điện Thoại:</label>
+            <input type="text" id="soDienThoai" th:field="*{nguoiMuon.soDienThoai}" />
+        </div>
+        <div>
+            <label for="ngayMuon">Ngày Mượn:</label>
+            <input type="date" id="ngayMuon" th:field="*{ngayMuon}" />
+        </div>
+        <div>
+            <label for="ngayTraDuKien">Ngày Trả Dự Kiến:</label>
+            <input type="date" id="ngayTraDuKien" th:field="*{ngayTraDuKien}" />
+        </div>
+        <div>
+            <label for="bookIds">Book IDs (comma-separated):</label>
+            <input type="text" id="bookIds" name="bookIds" />
+        </div>
+        <div>
+            <button type="submit">Create</button>
+        </div>
+    </form>
+</body>
+</html>

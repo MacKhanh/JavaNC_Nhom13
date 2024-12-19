@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tìm kiếm Người Mượn</title>
+</head>
+<body>
+<h1>Tìm kiếm Người Mượn</h1>
+<form th:action="@{/NguoiMuon/search}" method="post">
+    <label for="name">Từ khóa:</label>
+    <input type="text" id="name" name="name" />
+    <button type="submit">Tìm kiếm</button>
+</form>
+
+<h2>Kết quả tìm kiếm</h2>
+<table border="1">
+    <tr>
+        <th>Mã Sinh Viên</th>
+        <th>Tên Sinh Viên</th>
+        <th>Lớp</th>
+        <th>Số Điện Thoại</th>
+    </tr>
+    <tr th:each="nguoiMuon : ${results}">
+        <td th:text="${nguoiMuon.maSinhVien}">Mã Sinh Viên</td>
+        <td th:text="${nguoiMuon.tenSinhVien}">Tên Sinh Viên</td>
+        <td th:text="${nguoiMuon.lop}">Lớp</td>
+        <td th:text="${nguoiMuon.soDienThoai}">Số Điện Thoại</td>
+         <td> <a th:href="@{/NguoiMuon/edit/{maSinhVien}(maSinhVien=${nguoiMuon.maSinhVien})}" class="btn btn-outline-secondary">Sửa</a>
+            <a th:href="@{/NguoiMuon/delete/{maSinhVien}(maSinhVien=${nguoiMuon.maSinhVien})}" class="btn btn-outline-danger" 
+               onclick="return confirm('Bạn có chắc chắn muốn xóa người mượn này không?');">Xóa</a>
+       </td>
+    </tr>
+</table>
+<a href="/NguoiMuon/Index">Quay lại</a>
+</body>
+</html>

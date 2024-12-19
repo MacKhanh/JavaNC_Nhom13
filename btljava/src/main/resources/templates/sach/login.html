@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+		body {
+		            margin: 0;
+		            height: 100vh;
+		            display: flex;
+		            justify-content: center;
+		            align-items: center;
+		            background-color: #f0f0f0;
+		        }
+		.container{
+			padding: 10px;
+			background: white;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+			width: 80%;
+			height: 70%;
+			background-image: url("https://static.riviu.co/640/image/2020/07/17/e33d15d21bded455887902f44e806932.jpeg");
+			background-size: cover; 
+			background-position: center; 
+			
+		h2 {
+			color: white;
+			margin:40px;
+			text-align: center;
+		}
+		form {
+		            width: 100%;
+		            max-width: 400px;
+		        }
+			.btn {
+		            margin-top: 20px;
+		        }
+		        .text-center {
+		            margin-top: 15px;
+		        }
+		.form-label{
+			color: white;
+		}
+		.text-center a{
+			color: white;
+		}
+		.text-center a:hover{
+			color: blue;
+		}
+		.error{
+			color: white;
+		}
+	</style>
+</head>
+<body>
+	<div class="container mt-5">
+	   <div class="row justify-content-center">
+	     <div class="col-md-4">
+	       <h2 class="text-center">Đăng Nhập</h2>
+	       <form th:action="@{login}" id="loginForm" method="post">
+	         <div class="mb-3">
+	           <label for="email" class="form-label">Email</label>
+	           <input type="email" class="form-control" id="email_field" name="email" placeholder="Nhập email">
+	         </div>
+	         <div class="mb-3">
+	           <label for="password" class="form-label">Mật khẩu</label>
+	           <input type="password" class="form-control" id="password_field" name="password" placeholder="Nhập mật khẩu">
+	         </div>
+	         <button type="submit" id="signIn" class="btn btn-primary w-100">Đăng Nhập</button>
+	         <div class="text-center mt-3">
+	           <a href="#">Quên mật khẩu?</a> | 
+	           <a href="register">Đăng Ký</a>
+	         </div>
+	       </form>
+	     </div>
+	   </div>
+	 </div>
+	<script th:src="@{/js/app.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>

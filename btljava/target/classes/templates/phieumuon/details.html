@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Loan Slip Details</title>
+</head>
+<body>
+    <h1>Loan Slip Details</h1>
+    <div>
+        <h2>Loan Slip Information</h2>
+        <p><strong>ID:</strong> <span th:text="${phieuMuon.maPhieuMuon}"></span></p>
+        <p><strong>Borrow Date:</strong> <span th:text="${phieuMuon.ngayMuon}"></span></p>
+        <p><strong>Expected Return Date:</strong> <span th:text="${phieuMuon.ngayTraDuKien}"></span></p>
+        <p><strong>Actual Return Date:</strong> <span th:text="${phieuMuon.ngayTraThucTe}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${phieuMuon.trangThai}"></span></p>
+    </div>
+    <div>
+        <h2>Borrower Information</h2>
+        <p><strong>Student ID:</strong> <span th:text="${nguoiMuon.maSinhVien}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${nguoiMuon.tenSinhVien}"></span></p>
+        <p><strong>Class:</strong> <span th:text="${nguoiMuon.lop}"></span></p>
+        <p><strong>Phone Number:</strong> <span th:text="${nguoiMuon.soDienThoai}"></span></p>
+    </div>
+</body>
+</html>
